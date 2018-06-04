@@ -219,7 +219,9 @@ public class SecretProjectGUI extends JFrame {
 		JMenuItem mntmCommitChanges = new JMenuItem("Commit Changes");
 		mntmCommitChanges.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				resetChanges();
+				int result = JOptionPane.showConfirmDialog(null, "This will reset the change log. Are you sure?", "Change Reset", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if(result == JOptionPane.YES_OPTION)
+					resetChanges();
 			}
 		});
 		mnActions.add(mntmCommitChanges);
