@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import com.blackops.model.Assignment;
+import com.blackops.model.Family;
+import com.blackops.model.Minister;
 
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -31,8 +33,8 @@ public class AssignmentPanel extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	DefaultListModel<String> companionship;
-	DefaultListModel<String> assignment;
+	DefaultListModel<Minister> companionship;
+	DefaultListModel<Family> assignment;
 	/**
 	 * Create the panel.
 	 */
@@ -82,25 +84,25 @@ public class AssignmentPanel extends JPanel {
 		JLabel lblNewLabel = new JLabel("Families");
 		add(lblNewLabel, "cell 2 1");
 		
-		JList<String> companionshipList = new JList<String>();
+		JList<Minister> companionshipList = new JList<Minister>();
 
 		companionshipList.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		companionshipList.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		companionshipList.setBackground(SystemColor.info);
-		companionshipList.setDropMode(DropMode.ON_OR_INSERT);
+		companionshipList.setDropMode(DropMode.INSERT);
 		companionshipList.setDragEnabled(true);
 		companionshipList.setPreferredSize(new Dimension(100, 100));
 		companionshipList.setSize(new Dimension(100, 100));
 		companionshipList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		companionshipList.setTransferHandler(new AssignmentTransferHandler(a));
+		companionshipList.setTransferHandler(new MinisterTransferHandler(a));
 		companionshipList.setModel(companionship);
 		add(companionshipList, "cell 0 2,grow");
 		
-		JList<String> assignmentList = new JList<String>();
+		JList<Family> assignmentList = new JList<Family>();
 		assignmentList.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		assignmentList.setBackground(SystemColor.info);
 		assignmentList.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		assignmentList.setDropMode(DropMode.ON_OR_INSERT);
+		assignmentList.setDropMode(DropMode.INSERT);
 		assignmentList.setDragEnabled(true);
 		assignmentList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		assignmentList.setTransferHandler(new AssignmentTransferHandler(a));

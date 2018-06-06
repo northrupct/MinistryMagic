@@ -43,6 +43,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.blackops.model.Assignment;
 import com.blackops.model.District;
+import com.blackops.model.Family;
+import com.blackops.model.Minister;
 import com.blackops.model.MinisteringModel;
 
 import net.miginfocom.swing.MigLayout;
@@ -59,8 +61,8 @@ public class SecretProjectGUI extends JFrame {
 	private JTextField txtAddMinister;
 	
 	JPanel districtsPanel = new JPanel();
-	JList<String> familyList;
-	JList<String> ministerList;
+	JList<Family> familyList;
+	JList<Minister> ministerList;
 	
 	String currentFilename = "Untitled.dat";
 	
@@ -144,7 +146,7 @@ public class SecretProjectGUI extends JFrame {
 		JMenuItem mntmFamilies = new JMenuItem("Families");
 		mntmFamilies.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DefaultListModel<String> importData = importFileData();
+				DefaultListModel<Family> importData = importFamilyData();
 				ministeringModel.setUnassignedFamilies(importData);
 				populate();
 			}
@@ -154,7 +156,7 @@ public class SecretProjectGUI extends JFrame {
 		JMenuItem mntmMinisters = new JMenuItem("Ministers");
 		mntmMinisters.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DefaultListModel<String> importData = importFileData();
+				DefaultListModel<Minister> importData = importMinisterData();
 				ministeringModel.setUnassignedMinisters(importData);
 				populate();
 			}
@@ -251,7 +253,7 @@ public class SecretProjectGUI extends JFrame {
 
 		JPanel topPanel = new JPanel();
 		topPanel.setLayout(new MigLayout("", "[grow]", "[grow][]"));
-		topPanel.setBorder(new TitledBorder(null, "Families", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		topPanel.setBorder(new TitledBorder(null, "Unassigned Families", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
 		JScrollPane sourcePanel1 = new JScrollPane();
 		sourcePanel1.setPreferredSize(new Dimension(150, 200));
@@ -262,8 +264,8 @@ public class SecretProjectGUI extends JFrame {
 		topPanel.add(sourcePanel1, "cell 0 0, grow");
 		
 		
-		familyList = new JList<String>();
-		familyList.setDropMode(DropMode.ON_OR_INSERT);
+		familyList = new JList<Family>();
+		familyList.setDropMode(DropMode.INSERT);
 		familyList.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -275,22 +277,19 @@ public class SecretProjectGUI extends JFrame {
 			}
 		});
 		familyList.setMinimumSize(new Dimension(100, 50));
-		familyList.setPreferredSize(new Dimension(100, 100));
 		familyList.setBackground(UIManager.getColor("Button.background"));
 		familyList.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		familyList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		familyList.setDragEnabled(true);
-		sourcePanel1.setViewportView(familyList);
-				
-		//familyList.setModel(listModel);
-		familyList.setTransferHandler(new DnDTransferHandler());
+		sourcePanel1.setViewportView(familyList);				
+		familyList.setTransferHandler(new AssignmentTransferHandler());
 		
 		txtAddFamily = new JTextField();
 		txtAddFamily.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String txt = txtAddFamily.getText();
 				if(!txt.equals("")) {
-					ministeringModel.getUnassignedFamilies().addElement(txt);
+					ministeringModel.getUnassignedFamilies().addElement(new Family(txt));
 					txtAddFamily.setText("");
 				}
 			}
@@ -301,24 +300,22 @@ public class SecretProjectGUI extends JFrame {
 		
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setLayout(new MigLayout("", "[grow]", "[grow][]"));
-		bottomPanel.setBorder(new TitledBorder(null, "Ministers", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		bottomPanel.setBorder(new TitledBorder(null, "Unassigned Ministers", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
 		JScrollPane sourcePanel2 = new JScrollPane();
 		splitPane_1.setBottomComponent(bottomPanel);
 		
 		bottomPanel.add(sourcePanel2, "cell 0 0, grow");
-		//sourcePanel2.setBorder(new TitledBorder(null, "Source 2", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
-		ministerList = new JList<String>();
+		ministerList = new JList<Minister>();
 		ministerList.setMinimumSize(new Dimension(50, 50));
-		ministerList.setPreferredSize(new Dimension(100, 100));
 		ministerList.setBackground(UIManager.getColor("Button.background"));
 		ministerList.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		sourcePanel2.setViewportView(ministerList);
 		ministerList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		ministerList.setDragEnabled(true);
-		ministerList.setDropMode(DropMode.ON_OR_INSERT);
-		ministerList.setTransferHandler(new DnDTransferHandler());
+		ministerList.setDropMode(DropMode.INSERT);
+		ministerList.setTransferHandler(new MinisterTransferHandler());
 		ministerList.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -344,7 +341,7 @@ public class SecretProjectGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String txt = txtAddMinister.getText();
 				if(!txt.equals("")) {
-					ministeringModel.getUnassignedMinisters().addElement(txt);
+					ministeringModel.getUnassignedMinisters().addElement(new Minister(txt));
 					txtAddMinister.setText("");
 				}
 			}
@@ -425,11 +422,11 @@ public class SecretProjectGUI extends JFrame {
 			
 			for(Assignment a : d.getAssignmentList()) {
 				if(a.isChanged()) {
-					DefaultListModel<String> ministers = a.getMinisters();
+					DefaultListModel<Minister> ministers = a.getMinisters();
 					for(int i = 0; i < ministers.size(); i++) {
 						output.append(ministers.getElementAt(i) + "\n");
 					}
-					DefaultListModel<String> families = a.getFamilies();
+					DefaultListModel<Family> families = a.getFamilies();
 					for(int i = 0; i < families.size(); i++) {
 						output.append("\t\t" + families.getElementAt(i) + "\n");
 					}
@@ -457,9 +454,9 @@ public class SecretProjectGUI extends JFrame {
 		
 	}
 	
-	DefaultListModel<String> importFileData() {
+	DefaultListModel<Family> importFamilyData() {
 		JFileChooser fc = new JFileChooser();
-		DefaultListModel<String> importData = new DefaultListModel<String>();
+		DefaultListModel<Family> importData = new DefaultListModel<Family>();
 		
 		fc.setFileFilter(new FileNameExtensionFilter("Text Documents", "txt"));
 		
@@ -470,7 +467,30 @@ public class SecretProjectGUI extends JFrame {
 			try(BufferedReader br = new BufferedReader(new FileReader(importFile))) {
 				for(String line; (line = br.readLine()) != null; ) {
 					if(!line.isEmpty())
-						importData.addElement(line);
+						importData.addElement(new Family(line));
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return importData;		
+	}
+	
+	DefaultListModel<Minister> importMinisterData() {
+		JFileChooser fc = new JFileChooser();
+		DefaultListModel<Minister> importData = new DefaultListModel<Minister>();
+		
+		fc.setFileFilter(new FileNameExtensionFilter("Text Documents", "txt"));
+		
+		int returnVal = fc.showOpenDialog(this);
+		if(returnVal == JFileChooser.APPROVE_OPTION) {
+			File importFile = fc.getSelectedFile();
+			
+			try(BufferedReader br = new BufferedReader(new FileReader(importFile))) {
+				for(String line; (line = br.readLine()) != null; ) {
+					if(!line.isEmpty())
+						importData.addElement(new Minister(line));
 				}
 			}
 			catch(Exception e) {
@@ -495,7 +515,8 @@ public class SecretProjectGUI extends JFrame {
 			
 			int returnVal = fc.showSaveDialog(rootPane);
 			if(returnVal == JFileChooser.APPROVE_OPTION) {
-				String saveFile = fc.getSelectedFile() + ".dat";
+				String saveFile = fc.getSelectedFile() + "";
+				if(!saveFile.endsWith(".dat")) saveFile += ".dat";
 				try(FileOutputStream fout = new FileOutputStream(saveFile);
 						ObjectOutputStream oos = new ObjectOutputStream(fout)) {					
 					oos.writeObject(ministeringModel);

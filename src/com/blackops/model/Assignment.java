@@ -10,8 +10,8 @@ public class Assignment implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 9190865265797098960L;
-	DefaultListModel<String> ministers;
-	DefaultListModel<String> families;
+	DefaultListModel<Minister> ministers;
+	DefaultListModel<Family> families;
 	private District parent;
 	
 	private boolean changed;
@@ -25,37 +25,37 @@ public class Assignment implements Serializable {
 	}
 	
 	public Assignment() {
-		ministers = new DefaultListModel<String>();
-		families = new DefaultListModel<String>();
+		ministers = new DefaultListModel<Minister>();
+		families = new DefaultListModel<Family>();
 		changed = false;
 	}
 
 	public Assignment(District parent) {
 		this.parent = parent;
-		ministers = new DefaultListModel<String>();
-		families = new DefaultListModel<String>();
+		ministers = new DefaultListModel<Minister>();
+		families = new DefaultListModel<Family>();
 		changed = false;
 	}
 	
-	Assignment(District parent, DefaultListModel<String> ministers, DefaultListModel<String> families) {
+	Assignment(District parent, DefaultListModel<Minister> ministers, DefaultListModel<Family> families) {
 		this.parent = parent;
 		this.ministers = ministers;
 		this.families = families;
 	}
 
-	public DefaultListModel<String> getMinisters() {
+	public DefaultListModel<Minister> getMinisters() {
 		return ministers;
 	}
 
-	public void setMinisters(DefaultListModel<String> ministers) {
+	public void setMinisters(DefaultListModel<Minister> ministers) {
 		this.ministers = ministers;
 	}
 
-	public DefaultListModel<String> getFamilies() {
+	public DefaultListModel<Family> getFamilies() {
 		return families;
 	}
 
-	public void setFamilies(DefaultListModel<String> families) {
+	public void setFamilies(DefaultListModel<Family> families) {
 		this.families = families;
 	}
 

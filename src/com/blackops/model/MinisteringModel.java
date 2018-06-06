@@ -14,13 +14,13 @@ public class MinisteringModel implements Serializable{
 
 	ArrayList<District> districts;
 	
-	DefaultListModel<String> unassignedFamilies;
-	DefaultListModel<String> unassignedMinisters;
+	DefaultListModel<Family> unassignedFamilies;
+	DefaultListModel<Minister> unassignedMinisters;
 	
 	public MinisteringModel() {
 		districts = new ArrayList<District>();
-		unassignedFamilies = new DefaultListModel<String>();
-		unassignedMinisters = new DefaultListModel<String>();
+		unassignedFamilies = new DefaultListModel<Family>();
+		unassignedMinisters = new DefaultListModel<Minister>();
 
 //		unassignedFamilies.addElement("Bartons");
 //		unassignedFamilies.addElement("Rodgers");
@@ -48,19 +48,19 @@ public class MinisteringModel implements Serializable{
 		this.districts = districts;
 	}
 
-	public DefaultListModel<String> getUnassignedFamilies() {
+	public DefaultListModel<Family> getUnassignedFamilies() {
 		return unassignedFamilies;
 	}
 
-	public void setUnassignedFamilies(DefaultListModel<String> unassignedFamilies) {
+	public void setUnassignedFamilies(DefaultListModel<Family> unassignedFamilies) {
 		this.unassignedFamilies = unassignedFamilies;
 	}
 
-	public DefaultListModel<String> getUnassignedMinisters() {
+	public DefaultListModel<Minister> getUnassignedMinisters() {
 		return unassignedMinisters;
 	}
 
-	public void setUnassignedMinisters(DefaultListModel<String> unassignedMinisters) {
+	public void setUnassignedMinisters(DefaultListModel<Minister> unassignedMinisters) {
 		this.unassignedMinisters = unassignedMinisters;
 	}
 	
