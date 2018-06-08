@@ -17,6 +17,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -412,36 +414,56 @@ public class SecretProjectGUI extends JFrame {
 	
 	void exportProposedChanges() {
 		
-		StringBuilder output = new StringBuilder();
+		JFileChooser fc = new JFileChooser();		
+		fc.setDialogTitle("Save As...");
+		fc.setFileFilter(new FileNameExtensionFilter("Text Documents", "txt"));
 		
-		output.append("Proposed Ministering Changes\n");
-		output.append("\n");
-		
-		for(District d : ministeringModel.getDistricts()) {
-			output.append(d.getDistrictName() + "\n");
-			
-			for(Assignment a : d.getAssignmentList()) {
-				if(a.isChanged()) {
-					DefaultListModel<Minister> ministers = a.getMinisters();
-					for(int i = 0; i < ministers.size(); i++) {
-						output.append(ministers.getElementAt(i) + "\n");
+		int returnVal = fc.showSaveDialog(rootPane);
+		if(returnVal == JFileChooser.APPROVE_OPTION) {
+			String saveFile = fc.getSelectedFile() + "";
+			if(!saveFile.endsWith(".dat")) saveFile += ".txt";
+					
+				Date now = new Date();
+				SimpleDateFormat format = new SimpleDateFormat("MMM dd YYYY");
+				StringBuilder output = new StringBuilder();
+				
+				output.append("Proposed Ministering Changes\n");
+				output.append(format.format(now) + "\n");
+				
+				output.append("\n");
+				
+				for(District d : ministeringModel.getDistricts()) {
+					output.append(d.getDistrictName() + "\n");
+					
+					for(Assignment a : d.getAssignmentList()) {
+						if(a.isChanged()) {
+							DefaultListModel<Minister> ministers = a.getMinisters();
+							for(int i = 0; i < ministers.size(); i++) {
+								output.append(ministers.getElementAt(i) + "\n");
+							}
+							DefaultListModel<Family> families = a.getFamilies();
+							for(int i = 0; i < families.size(); i++) {
+								output.append("\t\t" + families.getElementAt(i) + "\n");
+							}
+							output.append("\n");
+						}
 					}
-					DefaultListModel<Family> families = a.getFamilies();
-					for(int i = 0; i < families.size(); i++) {
-						output.append("\t\t" + families.getElementAt(i) + "\n");
-					}
-					output.append("\n");
 				}
-			}
+					
+				
+				//write to file
+				try(FileWriter fw = new FileWriter("proposed_changes.txt")) {
+					fw.write(output.toString());
+					fw.close();
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
 			
+	
 		}
-		//write to file
-		try(FileWriter fw = new FileWriter("proposed_changes.txt")) {
-			fw.write(output.toString());
-			fw.close();
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
+		
+		
+		
 		
 	}
 	
@@ -511,6 +533,7 @@ public class SecretProjectGUI extends JFrame {
 		}
 		public void actionPerformed(ActionEvent e) {
 			JFileChooser fc = new JFileChooser();		
+			fc.setDialogTitle("Save As...");
 			fc.setFileFilter(new FileNameExtensionFilter("Data File", "dat"));
 			
 			int returnVal = fc.showSaveDialog(rootPane);
