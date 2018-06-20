@@ -126,7 +126,12 @@ public class MinisterTransferHandler extends TransferHandler {
 //            }
 //        }
         
-        if(assignment != null) assignment.setChanged(true);
+        if(assignment != null) {
+        	assignment.setChanged(true);
+        	data.setChanged(true);
+        }else {
+        	data.setChanged(false);
+        }
         return true;
     }
 

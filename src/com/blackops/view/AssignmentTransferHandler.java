@@ -100,7 +100,12 @@ public class AssignmentTransferHandler extends TransferHandler {
         // Perform the actual import.  
         if(insert) listModel.add(index, data);
 
-        if(assignment != null) assignment.setChanged(true);
+        if(assignment != null) {
+        	assignment.setChanged(true);
+        	data.setChanged(true);
+        }else {
+        	data.setChanged(false);
+        }
         return true;
     }
 

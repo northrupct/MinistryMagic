@@ -85,7 +85,7 @@ public class AssignmentPanel extends JPanel {
 		add(lblNewLabel, "cell 2 1");
 		
 		JList<Minister> companionshipList = new JList<Minister>();
-
+		companionshipList.setCellRenderer(new AssignmentCellRenderer());
 		companionshipList.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		companionshipList.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		companionshipList.setBackground(SystemColor.info);
@@ -99,6 +99,7 @@ public class AssignmentPanel extends JPanel {
 		add(companionshipList, "cell 0 2,grow");
 		
 		JList<Family> assignmentList = new JList<Family>();
+		assignmentList.setCellRenderer(new AssignmentCellRenderer());
 		assignmentList.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		assignmentList.setBackground(SystemColor.info);
 		assignmentList.setFont(new Font("Tahoma", Font.PLAIN, 13));
