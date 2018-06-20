@@ -75,7 +75,7 @@ public class AssignmentPanel extends JPanel {
 		});
 		btnNewButton.setMinimumSize(new Dimension(20, 20));
 		btnNewButton.setPreferredSize(new Dimension(20, 20));
-		btnNewButton.setIcon(new ImageIcon(AssignmentPanel.class.getResource("/resources/cross.png")));
+		btnNewButton.setIcon(new ImageIcon(AssignmentPanel.class.getResource("/cross.png")));
 		add(btnNewButton, "align right, cell 2 0 ");
 		
 		JLabel lblCompantionship = new JLabel("Compantionship");
