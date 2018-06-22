@@ -26,15 +26,35 @@ public class AboutDlg extends JDialog {
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(new MigLayout("", "[][][][][][][]", "[][][]"));
+		contentPanel.setLayout(new MigLayout("", "[][][][][][][]", "[][][][][]"));
 		{
 			JLabel lblMinisteringMagic = new JLabel("Ministering Magic");
 			lblMinisteringMagic.setFont(new Font("Tahoma", Font.PLAIN, 18));
-			contentPanel.add(lblMinisteringMagic, "cell 4 1,alignx center,aligny center");
+			contentPanel.add(lblMinisteringMagic, "cell 4 1 2 1,alignx center,aligny center");
 		}
 		{
-			JLabel lblCareyNorthrup = new JLabel("Carey Northrup");
-			contentPanel.add(lblCareyNorthrup, "cell 4 2");
+			JLabel lblAuthor = new JLabel("Author:");
+			contentPanel.add(lblAuthor, "cell 4 2,alignx right");
+		}
+		{
+			JLabel lblAuthorName = new JLabel("Carey Northrup");
+			contentPanel.add(lblAuthorName, "cell 5 2");
+		}
+		{
+			JLabel lblEmailCareynorthrupnetnet = new JLabel("Email: ");
+			contentPanel.add(lblEmailCareynorthrupnetnet, "cell 4 3,alignx right");
+		}
+		{
+			JLabel lblEmailAddress = new JLabel("carey@northrupnet.net");
+			contentPanel.add(lblEmailAddress, "cell 5 3");
+		}
+		{
+			JLabel lblGithubProject = new JLabel("GitHub Project: ");
+			contentPanel.add(lblGithubProject, "cell 4 4,alignx right");
+		}
+		{
+			JLabel lblGitHubURL = new JLabel("https://github.com/northrupct/MinistryMagic");
+			contentPanel.add(lblGitHubURL, "cell 5 4");
 		}
 		{
 			JPanel buttonPane = new JPanel();
