@@ -62,7 +62,7 @@ public class DistrictPanel extends JScrollPane {
 			AssignmentPanel ap = new AssignmentPanel(a);
 			viewportPanel.add(ap, "wrap");
 			Dimension d = viewportPanel.getPreferredSize();
-			System.out.println(viewportPanel.getPreferredSize().height);
+			
 			if(d.getHeight()+130 > viewportPanel.getPreferredSize().height)
 				d.setSize(320, d.getHeight() + 130);				
 			viewportPanel.setPreferredSize(d);			
