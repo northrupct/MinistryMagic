@@ -26,6 +26,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.JScrollPane;
 
 public class AssignmentPanel extends JPanel {
 
@@ -47,7 +48,7 @@ public class AssignmentPanel extends JPanel {
 		setPreferredSize(new Dimension(300, 130));
 		setMinimumSize(new Dimension(300, 130));
 		setBorder(null);
-		setLayout(new MigLayout("", "[100px][][grow]", "[][][100px,grow]"));
+		setLayout(new MigLayout("", "[100px][grow]", "[][][100px,grow]"));
 		
 		JLabel lblAssignment = new JLabel("Assignment");
 		lblAssignment.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -76,29 +77,36 @@ public class AssignmentPanel extends JPanel {
 		btnNewButton.setMinimumSize(new Dimension(20, 20));
 		btnNewButton.setPreferredSize(new Dimension(20, 20));
 		btnNewButton.setIcon(new ImageIcon(AssignmentPanel.class.getResource("/cross.png")));
-		add(btnNewButton, "align right, cell 2 0 ");
+		add(btnNewButton, "cell 1 0,alignx right");
 		
 		JLabel lblCompantionship = new JLabel("Compantionship");
 		add(lblCompantionship, "cell 0 1");
 		
 		JLabel lblNewLabel = new JLabel("Families");
-		add(lblNewLabel, "cell 2 1");
+		add(lblNewLabel, "cell 1 1");
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setViewportBorder(null);
+		add(scrollPane, "cell 0 2,grow");
 		
 		JList<Minister> companionshipList = new JList<Minister>();
+		scrollPane.setViewportView(companionshipList);
 		companionshipList.setCellRenderer(new AssignmentCellRenderer());
 		companionshipList.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		companionshipList.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		companionshipList.setBackground(SystemColor.info);
 		companionshipList.setDropMode(DropMode.INSERT);
 		companionshipList.setDragEnabled(true);
-		companionshipList.setPreferredSize(new Dimension(100, 100));
 		companionshipList.setSize(new Dimension(100, 100));
 		companionshipList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		companionshipList.setTransferHandler(new MinisterTransferHandler(a));
 		companionshipList.setModel(companionship);
-		add(companionshipList, "cell 0 2,grow");
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		add(scrollPane_1, "cell 1 2,grow");
 		
 		JList<Family> assignmentList = new JList<Family>();
+		scrollPane_1.setViewportView(assignmentList);
 		assignmentList.setCellRenderer(new AssignmentCellRenderer());
 		assignmentList.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		assignmentList.setBackground(SystemColor.info);
@@ -108,7 +116,6 @@ public class AssignmentPanel extends JPanel {
 		assignmentList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		assignmentList.setTransferHandler(new AssignmentTransferHandler(a));
 		assignmentList.setModel(assignment);
-		add(assignmentList, "cell 2 2,grow");
 
 	}
 

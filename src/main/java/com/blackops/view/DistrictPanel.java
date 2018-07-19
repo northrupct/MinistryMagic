@@ -49,9 +49,9 @@ public class DistrictPanel extends JScrollPane {
 				viewportPanel.add(ap, "wrap");
 				
 				Dimension d = viewportPanel.getPreferredSize();
-				System.out.println(viewportPanel.getPreferredSize().height);
-				if(d.getHeight()+130 > viewportPanel.getPreferredSize().height)
-					d.setSize(320, d.getHeight() + 130);				
+				//System.out.println(viewportPanel.getPreferredSize().height);
+				if(d.getHeight()+135 > viewportPanel.getPreferredSize().height)
+					d.setSize(320, d.getHeight() + 135);				
 				viewportPanel.setPreferredSize(d);
 				viewportPanel.revalidate();
 			}
@@ -63,8 +63,8 @@ public class DistrictPanel extends JScrollPane {
 			viewportPanel.add(ap, "wrap");
 			Dimension d = viewportPanel.getPreferredSize();
 			
-			if(d.getHeight()+130 > viewportPanel.getPreferredSize().height)
-				d.setSize(320, d.getHeight() + 130);				
+			if(d.getHeight()+135 > viewportPanel.getPreferredSize().height)
+				d.setSize(320, d.getHeight() + 135);				
 			viewportPanel.setPreferredSize(d);			
 		}
 		viewportPanel.revalidate();

@@ -306,7 +306,7 @@ public class SecretProjectGUI extends JFrame {
 		txtAddFamily = new JTextField();
 		txtAddFamily.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String txt = txtAddFamily.getText();
+				String txt = txtAddFamily.getText().substring(0, Math.min(txtAddFamily.getText().length(), 25));
 				if (!txt.equals("")) {
 					ministeringModel.getUnassignedFamilies().addElement(new Family(txt));
 					txtAddFamily.setText("");
@@ -358,6 +358,7 @@ public class SecretProjectGUI extends JFrame {
 		txtAddMinister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String txt = txtAddMinister.getText();
+				txt = txt.substring(0, Math.min(txt.length(), 20));
 				if (!txt.equals("")) {
 					ministeringModel.getUnassignedMinisters().addElement(new Minister(txt));
 					txtAddMinister.setText("");
@@ -436,7 +437,6 @@ public class SecretProjectGUI extends JFrame {
 		int returnVal = fc.showSaveDialog(rootPane);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			String saveFile = fc.getSelectedFile() + "";
-			System.out.println(saveFile);
 			if (!saveFile.endsWith(".txt"))
 				saveFile += ".txt";
 
