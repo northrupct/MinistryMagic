@@ -16,7 +16,7 @@ plugins {
 
 // Define the main class for the application
 mainClassName = 'com.blackops.view.SecretProjectGUI'
-version = '0.3.1'
+version = '0.3.2'
 
 dependencies {
     // This dependency is found on compile classpath of this component and consumers.
